@@ -26,6 +26,7 @@ class Logic:
             move.effect=[move.effect]
             move.effect_chance=[move.effect_chance]
             move.effect_magnitude=[move.effect_magnitude]
+        
         ei=0 #effect index i js dont wanna type that shit
 
         for effect in move.effect:
@@ -68,9 +69,9 @@ class Logic:
 
             if effect == 'flinch':
                 if random.random()<=move.effect_chance[ei]:
-                    if move.name != 'fake_out':
+                    if move.name != 'Fake Out':
                         mon_attacked.flinched=True
-                    elif move.name == 'fake_out':
+                    elif move.name == 'Fake Out':
                         if mon_using.active_turns<1:
                             mon_attacked.flinched=True
                     

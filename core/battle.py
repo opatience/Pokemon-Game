@@ -11,11 +11,36 @@ class Battle:
         self.turn = 0
 
     # checks for speed
-    def is_player_faster(self, player, cpu):
+    def is_player_first(self, player, cpu, player_choice, cpu_move):
+        if self.prio_logic(player_choice, cpu_move) == 'player_prio':
+            return True
+        elif self.prio_logic(player_choice, cpu_move) == 'cpu_prio':
+            return False
+ 
         if player.active_pokemon.speed >= cpu.active_pokemon.speed:
             return True
         else:
             return False
+
+    def prio_logic(self, player_choice, cpu_move):
+        player_prio=0
+        cpu_prio=0
+        if isinstance(player_choice['attack'], Move) == True:
+            ei=0
+            for effect in player_choice['attack'].effect:
+                if effect == 'priority':
+                    player_prio=player_choice['attack'].magnitude[ei]
+                ei+=1
+        ei=0
+        for effect in cpu_move.effect:
+            if effect == 'priority':
+                cpu_prio=cpu_move.magnitude[ei]
+            ei+=1
+        if cpu_prio<player_prio:
+            return('player_prio')
+        elif cpu_prio>player_prio:
+            return ('cpu_prio')
+        
 
     # checks if the cpu's pokemon has fainted
     def cpu_faint_check(self, cpu):
@@ -108,9 +133,9 @@ class Battle:
     def execute_turn(self, player, cpu):
         player_choice = self.player_action_choice(player)
         cpu_move = self.cpu_action_choice(cpu)
-        player_faster = self.is_player_faster(player, cpu)
+        player_first = self.is_player_first(player, cpu, player_choice, cpu_move)
 
-        if player_faster == True:
+        if player_first == True:
 
             if self.status_delay(player) == False:
                 self.run_choice(player, player_choice)

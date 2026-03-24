@@ -54,11 +54,13 @@ def build_moves():
                     move_magnitude[mi]=int(magnitude)
                 mi+=1
         elif move_magnitude[0]=='0':
-            move_chance=int(move_chance)/100
-            move_magnitude=float(move_magnitude)
+            move_chance=[int(move_chance)/100]
+            move_magnitude=[float(move_magnitude)]
+            move_effect = [move_effect]
         else:
-           move_chance=int(move_chance)/100
-           move_magnitude=int(move_magnitude)
+           move_chance=[int(move_chance)/100]
+           move_magnitude=[int(move_magnitude)]
+           move_effect = [move_effect]
         globals()[move_var_name]=Move(move_display_name, move_damage, move_type, move_category, move_effect, move_chance, move_magnitude, move_accuracy)
 
 build_moves()
