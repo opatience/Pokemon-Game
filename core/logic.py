@@ -71,8 +71,6 @@ class Logic:
                         delay(2)
                         mon_attacked.status='confused'
 
-            else:
-                print(f'This pokemon is already afflicted with a status condition')
             
             if effect == 'flinch':
                 if random.random()<=move.effect_chance[ei]:
