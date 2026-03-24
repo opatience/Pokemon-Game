@@ -287,19 +287,26 @@ class Battle:
         used_move = ''
 
         for move in cpu.active_pokemon.moveset:
-            if self.calculate_damage(move, self.player.active_pokemon, cpu.active_pokemon, False) > highest_damage:
+            if self.calculate_damage(move, self.player.active_pokemon, cpu.active_pokemon, False) >= highest_damage:
                 highest_damage = self.calculate_damage(move, self.player.active_pokemon, cpu.active_pokemon, False)
                 used_move = move
-
-        return used_move
+        return(used_move)
 
     def calculate_damage(self, move, defending_pokemon, attacking_mon, damage_calc=True):
+        protect_mult = 1
         stab_mult = 1
         type_int_mult = 1
         crit_mult = 1
         burn_mult = 1
 
         crit_check = random.random()
+
+        if defending_pokemon.protected == True:
+            print(f'{defending_pokemon.name} is protected from damage this turn')
+            delay(2)
+            defending_pokemon.protected = False
+            protect_mult = 0
+        
 
         if damage_calc == True:
             if self.game.logic.charge_check(attacking_mon, move) == True:
@@ -338,12 +345,12 @@ class Battle:
         if move.category == 'physical':
             return ((((((2 * attacking_mon.level * crit_mult) / 5) + 2)
                      * move.damage * (attacking_mon.atk / defending_pokemon.defense)) / 50 + 2)
-                    * stab_mult * burn_mult * type_int_mult * random.uniform(.85, 1))
+                    * stab_mult * burn_mult * type_int_mult * random.uniform(.85, 1) * protect_mult)
 
         elif move.category == 'special':
             return ((((((2 * attacking_mon.level * crit_mult) / 5) + 2)
                      * move.damage * (attacking_mon.spatk / defending_pokemon.spdef)) / 50 + 2)
-                    * stab_mult * type_int_mult * random.uniform(.85, 1))
+                    * stab_mult * type_int_mult * random.uniform(.85, 1) * protect_mult)
 
         elif move.category == 'status':
             return 0

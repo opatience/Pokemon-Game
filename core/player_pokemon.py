@@ -53,6 +53,7 @@ class PlayerPokemon:
         self.fire_spin=False
         self.trapped_time=0
         self.active_turns=0
+        self.protected=False
     
         
     def evolve_pokemon(self):

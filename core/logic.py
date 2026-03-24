@@ -100,6 +100,8 @@ class Logic:
                 print(f'{mon_using.name} has {round(((mon_using.temp_hp/mon_using.hp)*100))}% hp remaining')
             
 
+            if effect == 'protect':
+                mon_using.protected = True
 
             if effect == 'self_attack':
                 atk_stage=mon_using.attack_stage

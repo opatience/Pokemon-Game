@@ -99,7 +99,7 @@ def determine_rival_starter():
 def testing_environment():
     game.player.new_pokemon(bulbasaur, 100)
     game.player.team[0].base_hp=100000
-    game.player.team[0].moveset[0]=confuse_ray
+    game.player.team[0].moveset[0]=protect
     game.player.team[0].moveset[1]=sleep_powder
     game.player.team[0].moveset[2]=poison_powder
     game.player.team[0].moveset[3]=scary_face

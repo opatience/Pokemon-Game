@@ -69,7 +69,7 @@ class Player:
             pokemon.active_turns=0
             pokemon.trapped_time=0
             pokemon.charging = False
-            
+
 
     #sets the conditions needed for battle to work
     def setup_battle(self, opponent):
@@ -128,6 +128,9 @@ class Player:
         elif player.active_pokemon.temp_hp<=0:
             print(f'Your {player.active_pokemon.name} has 0% hp remaining\n')
         delay(2)
+        if cpu_move_choice.effect != 'none':
+            self.game.logic.move_effect(cpu_move_choice, self.active_pokemon, player.active_pokemon)
+
 
     def acquire_item(self, item, quanity):
         already_have=False
