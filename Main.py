@@ -108,7 +108,6 @@ def testing_environment():
     test_cpu.wild=True
     test_cpu.new_pokemon(squirtle, 100)
     test_cpu.team[0].moveset[0]=ice_shard
-    ice_shard.damage=200
     test_cpu.team[0].base_hp=10000
     game.battle.pokemon_fights(game.player, test_cpu)
 

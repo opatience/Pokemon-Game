@@ -22,12 +22,6 @@ pokemon_lab=Location('pokemon lab',
                      0,
                      6)
 
-route_101=Location('Route 101',
-                   'You are in a tall grassy meadow with a path through the center',
-                    {pidgey: .35, weedle: .3, ekans: .3, diglett:.05},
-                    random.randint(3,5),
-                    8)
-
 test_area=Location('Route 101',
                    'You are in a tall grassy meadow with a path through the center',
                     {pidgey: .35, weedle: .3, ekans: .3, diglett:.05},

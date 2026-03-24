@@ -57,13 +57,19 @@ class Player:
                 pokemon.temp_hp=pokemon.hp
     
     @property
-    def reset_stages(self):
+    def reset_conditions(self):
         for pokemon in self.team:
             pokemon.defense_stage=0
             pokemon.spdef_stage=0
             pokemon.attack_stage=0
             pokemon.spatk_stage=0
             pokemon.speed_stage=0
+            pokemon.status=None
+            pokemon.afflicted_turns=0
+            pokemon.active_turns=0
+            pokemon.trapped_time=0
+            pokemon.charging = False
+            
 
     #sets the conditions needed for battle to work
     def setup_battle(self, opponent):
@@ -72,9 +78,7 @@ class Player:
         self.fainted=[]
         self.opponent=opponent
         self.ran=False
-        self.status=None
-        self.afflicted_turns=0
-        self.reset_stages
+        self.reset_conditions
 
 
     def faint_logic(self):
