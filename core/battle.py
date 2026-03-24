@@ -281,6 +281,37 @@ class Battle:
             print(f'{mon.name} is harmed by the inferno surrounding them')
             delay(2)
             print(f'{mon.name} has {round(((mon.temp_hp/mon.hp)*100))}% hp remaining')
+        
+
+        #MAKE THIS INTO VARS
+        if mon.leech_seed_draining == True:
+            leech_seed_drain = ((1/8) * mon.hp)
+            mon.temp_hp -= leech_seed_drain
+            print(f"Plants drain {mon.name}'s health")
+            delay(2)
+            print(f'{mon.name} has {round(
+                                        ((mon.temp_hp/mon.hp)
+                                         *100))}% hp remaining\n')
+            delay(2)
+
+            if round(((player.opponent.active_pokemon.temp_hp+leech_seed_drain)/player.opponent.active_pokemon.hp)*100)<100:
+                print(f"{player.opponent.aname} is healed by leech seed")
+                delay(2)
+                print(f"{player.opponent.aname} gained {round(( 
+                                                        ((player.opponent.active_pokemon.temp_hp+leech_seed_drain)
+                                                         -player.opponent.active_pokemon.temp_hp)   #THIS MATH FEELS WRONG
+                                                        /player.opponent.active_pokemon.temp_hp)
+                                                        *100)}% hp")
+                delay(2)
+                player.opponent.active_pokemon.temp_hp+=leech_seed_drain
+
+            else:
+               print(f"{player.opponent.aname} is healed by leech seed")
+               delay(2)
+               print(f'{player.opponent.aname} is at 100% hp') 
+               delay(2)
+               player.opponent.active_pokemon.temp_hp = player.opponent.active_pokemon.hp
+
 
     def optimize_cpu_attack(self, cpu):
         highest_damage = 0

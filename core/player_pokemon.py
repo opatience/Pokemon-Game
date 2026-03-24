@@ -54,6 +54,7 @@ class PlayerPokemon:
         self.trapped_time=0
         self.active_turns=0
         self.protected=False
+        self.leech_seed_draining=False
     
         
     def evolve_pokemon(self):

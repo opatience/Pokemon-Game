@@ -103,6 +103,11 @@ class Logic:
             if effect == 'protect':
                 mon_using.protected = True
 
+            if effect == 'leech_seed':
+                print(f'The seeds attatch to the enemy {mon_attacked.name}\n')
+                delay(2)
+                mon_attacked.leech_seed_draining = True
+
             if effect == 'self_attack':
                 atk_stage=mon_using.attack_stage
                 if self_stat_rng<=move.effect_chance[ei]:
@@ -228,6 +233,7 @@ class Logic:
         mon.speed_stage=0
         mon.active_turns=0
         mon.fire_spin=False
+        mon.leech_seed_draining=False
         if mon.status == 'confused':
             mon.status=None
 
