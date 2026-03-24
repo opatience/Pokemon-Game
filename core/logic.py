@@ -33,40 +33,47 @@ class Logic:
             chance=move.effect_chance[ei]
             magnitude=move.effect_magnitude[ei]
 
+            if mon_attacked.status == None:
 
-
-            if effect == 'poison':
-                if random.random()<=move.effect_chance[ei]:
-                    print(f'{mon_attacked.name} is poisoned')
-                    delay(2)
-                    mon_attacked.status='poisoned'
+                if effect == 'poison':
+                    if random.random()<=move.effect_chance[ei]:
+                        print(f'{mon_attacked.name} is poisoned')
+                        delay(2)
+                        mon_attacked.status='poisoned'
                     
             
 
-            if effect == 'sleep':
-                if random.random()<=move.effect_chance[ei]:
-                    print(f'{mon_attacked.name} falls asleep')
-                    delay(2)
-                    mon_attacked.status='asleep'
+                if effect == 'sleep':
+                    if random.random()<=move.effect_chance[ei]:
+                        print(f'{mon_attacked.name} falls asleep')
+                        delay(2)
+                        mon_attacked.status='asleep'
                     
             
 
-            if effect == 'burn':
-                if random.random()<=move.effect_chance[ei]:
-                    print(f'{mon_attacked.name} is burnt')
-                    delay(2)
-                    mon_attacked.status='burn'
+                if effect == 'burn':
+                    if random.random()<=move.effect_chance[ei]:
+                        print(f'{mon_attacked.name} is burnt')
+                        delay(2)
+                        mon_attacked.status='burn'
                     
 
 
-            if effect == 'paralyze':
-                if random.random()<=move.effect_chance[ei]:
-                    print(f'{mon_attacked.name} is paralyzed')
-                    delay(2)
-                    mon_attacked.status='paralyzed'
-                    
+                if effect == 'paralyze':
+                    if random.random()<=move.effect_chance[ei]:
+                        print(f'{mon_attacked.name} is paralyzed')
+                        delay(2)
+                        mon_attacked.status='paralyzed'
+
+                if effect == 'confuse':
+                    if random.random()<=move.effect_chance[ei]:
+                        print(f'{mon_attacked.name} is confused')
+                        delay(2)
+                        mon_attacked.status='confused'
+
+            else:
+                print(f'This pokemon is already afflicted with a status condition')
             
-
             if effect == 'flinch':
                 if random.random()<=move.effect_chance[ei]:
                     if move.name != 'Fake Out':

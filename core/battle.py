@@ -234,9 +234,19 @@ class Battle:
 
         if mon.status == 'confused':
             confusion_check = random.random()
-            if confusion_check <= .33:
+            confusion_end_check = random.random()
+            if mon.afflicted_turns == 4:
+                print(f'{mon.name} snaps out of their confusion')
+                mon.status = None
+                return False
+            elif mon.afflicted_turns>1 and confusion_end_check<=.25:
+                print(f'{mon.name} snaps out of their confusion')
+                mon.status = None
+                return False
+            elif confusion_check <= .33:
                 print(f'{mon.name} hit themselves in confusion')
                 display_damage(mon, ((1/16) * mon.hp))
+                return True
 
         if mon.flinched == True:
             print(f'{mon.name} flinched')
@@ -250,6 +260,8 @@ class Battle:
 
         if mon.status != None:
             mon.afflicted_turns += 1
+        else:
+            mon.afflicted_turns = 0
 
             if mon.status == 'burn':
                 player.active_pokemon.temp_hp -= ((1/16) * mon.hp)
