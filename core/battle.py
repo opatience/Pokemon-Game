@@ -260,9 +260,7 @@ class Battle:
 
         if mon.status != None:
             mon.afflicted_turns += 1
-        else:
-            mon.afflicted_turns = 0
-
+    
             if mon.status == 'burn':
                 player.active_pokemon.temp_hp -= ((1/16) * mon.hp)
                 print(f'{mon.name} burned')
@@ -297,10 +295,9 @@ class Battle:
             if round(((player.opponent.active_pokemon.temp_hp+leech_seed_drain)/player.opponent.active_pokemon.hp)*100)<100:
                 print(f"{player.opponent.aname} is healed by leech seed")
                 delay(2)
-                print(f"{player.opponent.aname} gained {round(( 
-                                                        ((player.opponent.active_pokemon.temp_hp+leech_seed_drain)
-                                                         -player.opponent.active_pokemon.temp_hp)   #THIS MATH FEELS WRONG
-                                                        /player.opponent.active_pokemon.temp_hp)
+                print(f"{player.opponent.aname} gained {round( 
+                                                        (((player.opponent.active_pokemon.temp_hp+leech_seed_drain)/player.opponent.active_pokemon.hp)
+                                                         -(player.opponent.active_pokemon.temp_hp/player.opponent.active_pokemon.hp))
                                                         *100)}% hp")
                 delay(2)
                 player.opponent.active_pokemon.temp_hp+=leech_seed_drain
@@ -311,6 +308,8 @@ class Battle:
                print(f'{player.opponent.aname} is at 100% hp') 
                delay(2)
                player.opponent.active_pokemon.temp_hp = player.opponent.active_pokemon.hp
+        else:
+            mon.afflicted_turns = 0
 
 
     def optimize_cpu_attack(self, cpu):

@@ -19,6 +19,7 @@ class Logic:
                     print('Ding!\n')
                     delay(1.5)
         return('caught')
+    
 
     def move_effect(self, move, mon_using, mon_attacked):
         self_stat_rng=random.random()
@@ -26,6 +27,11 @@ class Logic:
             move.effect=[move.effect]
             move.effect_chance=[move.effect_chance]
             move.effect_magnitude=[move.effect_magnitude]
+        
+        if not 'protect' in move.effect:
+            mon_using.consecutive_protects = 0
+        else:
+            mon_using.consecutive_protects += 1
         
         ei=0 #effect index i js dont wanna type that shit
 
@@ -101,7 +107,11 @@ class Logic:
             
 
             if effect == 'protect':
-                mon_using.protected = True
+                protect_roll=random.random()
+                if protect_roll <= (1/3**(mon_using.consecutive_protects-1)):
+                    mon_using.protected = True
+                else:
+                    print('Protect failed due to overuse')
 
             if effect == 'leech_seed':
                 print(f'The seeds attatch to the enemy {mon_attacked.name}\n')
