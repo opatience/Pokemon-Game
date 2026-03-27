@@ -12,6 +12,7 @@ from data.items import *
 from utils import *
 from rich import *
 from colorama import *
+from data.weather import *
 
 #delay_on()
 #game.player.money=5000
@@ -100,8 +101,8 @@ def testing_environment():
     #delay_on()
     game.player.new_pokemon(bulbasaur, 100)
     game.player.team[0].base_hp=100000
-    game.player.team[0].moveset[0]=leech_seed
-    game.player.team[0].moveset[1] = protect
+    game.player.team[0].moveset[0]=sandstorm
+    game.player.team[0].moveset[1] = water_gun
     game.player.team[0].moveset[2]=poison_powder
     game.player.team[0].moveset[3]=scary_face
     game.player.inventory[pokeball]=3000000

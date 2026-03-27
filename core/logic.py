@@ -1,6 +1,7 @@
 import random
 from utils import *
 from data.interactions import *
+from data.weather import *
 
 class Logic:
     def __init__(self, game):
@@ -41,6 +42,7 @@ class Logic:
 
             if mon_attacked.status == None:
 
+                #status modifiers 
                 if effect == 'poison':
                     if random.random()<=move.effect_chance[ei]:
                         print(f'{mon_attacked.name} is poisoned')
@@ -62,7 +64,7 @@ class Logic:
                         print(f'{mon_attacked.name} is burnt')
                         delay(2)
                         mon_attacked.status='burn'
-                    
+    
 
 
                 if effect == 'paralyze':
@@ -70,6 +72,7 @@ class Logic:
                         print(f'{mon_attacked.name} is paralyzed')
                         delay(2)
                         mon_attacked.status='paralyzed'
+
 
                 if effect == 'confuse':
                     if random.random()<=move.effect_chance[ei]:
@@ -86,17 +89,36 @@ class Logic:
                         if mon_using.active_turns<1:
                             mon_attacked.flinched=True
                     
+            #battle shortcut for weather code
+            battle_sc = self.game.battle
+
+            #weather setting effects
+            if effect == 'weather_rain':
+                battle_sc.weather = Rain()
+
+            if effect == 'weather_sun':
+                battle_sc.weather = Sun()
+
+            if effect == 'weather_sandstorm':
+                battle_sc.weather = Sandstorm()
+
+            if effect == 'weather_hail':
+                battle_sc.weather = Hail()
 
 
-            if effect == 'trap':
-                mon_attacked.trapped=True
-        
 
+            #persistent or semi-persistent non-status modifiers
 
             if effect == 'fire_spin':
                 mon_attacked.fire_spin=True
 
+            if effect == 'trap':
+                mon_attacked.trapped=True
 
+            if effect == 'leech_seed':
+                print(f'The seeds attatch to the enemy {mon_attacked.name}\n')
+                delay(2)
+                mon_attacked.leech_seed_draining = True
 
             if effect == 'recoil':
                 dmg=(self.game.battle.calculate_damage(move, mon_attacked, mon_using, False)*move.effect_magnitude[ei])
@@ -113,10 +135,6 @@ class Logic:
                 else:
                     print('Protect failed due to overuse')
 
-            if effect == 'leech_seed':
-                print(f'The seeds attatch to the enemy {mon_attacked.name}\n')
-                delay(2)
-                mon_attacked.leech_seed_draining = True
 
             if effect == 'self_attack':
                 atk_stage=mon_using.attack_stage

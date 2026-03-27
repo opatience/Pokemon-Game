@@ -4,11 +4,13 @@ from rich import *
 import math
 import random
 from data.interactions import *
+from data.weather import *
 
 class Battle:
     def __init__(self, game):
         self.game = game
         self.turn = 0
+        self.weather = ClearWeather()
 
     # checks for speed
     def is_player_first(self, player, cpu, player_choice, cpu_move):
@@ -198,9 +200,15 @@ class Battle:
         return move_choice
 
     def cleanup_turn(self, player, cpu):
+        self.increment_weather()
         self.increment_turn(player, cpu)
         self.resolve_status(player)
         self.resolve_status(cpu)
+    
+    def increment_weather(self):
+        self.weather.turn_end()
+        if self.weather.duration == 0:
+            self.weather = ClearWeather()
 
     # continue battle check
     def proceed_check(self, player, cpu):
@@ -257,6 +265,8 @@ class Battle:
 
     def resolve_status(self, player):
         mon = player.active_pokemon
+
+        self.weather.damage_pokemon(mon)
 
         if mon.status != None:
             mon.afflicted_turns += 1
@@ -330,29 +340,27 @@ class Battle:
         burn_mult = 1
 
         crit_check = random.random()
-
-        if defending_pokemon.protected == True:
-            print(f'{defending_pokemon.name} is protected from damage this turn')
-            delay(2)
-            defending_pokemon.protected = False
-            protect_mult = 0
-        
-
         if damage_calc == True:
+            if defending_pokemon.protected == True:
+                print(f'{defending_pokemon.name} is protected from damage this turn')
+                delay(2)
+                defending_pokemon.protected = False
+                protect_mult = 0
+        
             if self.game.logic.charge_check(attacking_mon, move) == True:
                 return 0
 
-        if damage_calc == True and attacking_mon.charging == False:
-            if move.effect == 'high_crit':
-                if crit_check > .8:
-                    delay(2)
-                    print("It's a critical hit!")
-                    crit_mult = 1.5
-            else:
-                if crit_check > .9:
-                    delay(2)
-                    print("It's a critical hit!")
-                    crit_mult = 1.5
+            if attacking_mon.charging == False:
+                if move.effect == 'high_crit':
+                    if crit_check > .8:
+                        delay(2)
+                        print("It's a critical hit!")
+                        crit_mult = 1.5
+                else:
+                    if crit_check > .9:
+                        delay(2)
+                        print("It's a critical hit!")
+                        crit_mult = 1.5
 
         
         if isinstance(attacking_mon.type, str) == True:
@@ -375,12 +383,12 @@ class Battle:
         if move.category == 'physical':
             return ((((((2 * attacking_mon.level * crit_mult) / 5) + 2)
                      * move.damage * (attacking_mon.atk / defending_pokemon.defense)) / 50 + 2)
-                    * stab_mult * burn_mult * type_int_mult * random.uniform(.85, 1) * protect_mult)
+                    * stab_mult * burn_mult * type_int_mult * random.uniform(.85, 1) * protect_mult * self.weather.modify_damage(move.type))
 
         elif move.category == 'special':
             return ((((((2 * attacking_mon.level * crit_mult) / 5) + 2)
                      * move.damage * (attacking_mon.spatk / defending_pokemon.spdef)) / 50 + 2)
-                    * stab_mult * type_int_mult * random.uniform(.85, 1) * protect_mult)
+                    * stab_mult * type_int_mult * random.uniform(.85, 1) * protect_mult * self.weather.modify_damage(move.type))
 
         elif move.category == 'status':
             return 0

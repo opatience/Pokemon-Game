@@ -69,4 +69,5 @@ def display_damage(mon, dmg):
     print(f'{mon.name} has {round(((mon.temp_hp/mon.hp)*100))}% hp remaining')
     delay(2)
 
+
 default=Fore.WHITE
