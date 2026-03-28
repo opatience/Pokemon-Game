@@ -2,6 +2,7 @@ import random
 from utils import *
 from data.interactions import *
 from data.weather import *
+from data.status import *
 
 class Logic:
     def __init__(self, game):
@@ -24,10 +25,7 @@ class Logic:
 
     def move_effect(self, move, mon_using, mon_attacked):
         self_stat_rng=random.random()
-        if type(move.effect)==str:
-            move.effect=[move.effect]
-            move.effect_chance=[move.effect_chance]
-            move.effect_magnitude=[move.effect_magnitude]
+
         
         if not 'protect' in move.effect:
             mon_using.consecutive_protects = 0
@@ -40,45 +38,41 @@ class Logic:
             chance=move.effect_chance[ei]
             magnitude=move.effect_magnitude[ei]
 
-            if mon_attacked.status == None:
-
                 #status modifiers 
-                if effect == 'poison':
-                    if random.random()<=move.effect_chance[ei]:
-                        print(f'{mon_attacked.name} is poisoned')
-                        delay(2)
-                        mon_attacked.status='poisoned'
+            if effect == 'poison':
+                if random.random()<=move.effect_chance[ei]:
+                    print(f'{mon_attacked.name} is poisoned')
+                    delay(2)
+                    mon_attacked.status.append(Poison())
                     
             
 
-                if effect == 'sleep':
-                    if random.random()<=move.effect_chance[ei]:
-                        print(f'{mon_attacked.name} falls asleep')
-                        delay(2)
-                        mon_attacked.status='asleep'
+            if effect == 'sleep':
+                if random.random()<=move.effect_chance[ei]:
+                    print(f'{mon_attacked.name} falls asleep')
+                    delay(2)
+                    mon_attacked.status='asleep'
                     
             
 
-                if effect == 'burn':
-                    if random.random()<=move.effect_chance[ei]:
-                        print(f'{mon_attacked.name} is burnt')
-                        delay(2)
-                        mon_attacked.status='burn'
+            if effect == 'burn':
+                if random.random()<=move.effect_chance[ei]:
+                    Burn().apply_status(mon_attacked)
     
 
 
-                if effect == 'paralyze':
-                    if random.random()<=move.effect_chance[ei]:
-                        print(f'{mon_attacked.name} is paralyzed')
-                        delay(2)
-                        mon_attacked.status='paralyzed'
+            if effect == 'paralyze':
+                if random.random()<=move.effect_chance[ei]:
+                    print(f'{mon_attacked.name} is paralyzed')
+                    delay(2)
+                    mon_attacked.status='paralyzed'
 
 
-                if effect == 'confuse':
-                    if random.random()<=move.effect_chance[ei]:
-                        print(f'{mon_attacked.name} is confused')
-                        delay(2)
-                        mon_attacked.status='confused'
+            if effect == 'confuse':
+                if random.random()<=move.effect_chance[ei]:
+                    print(f'{mon_attacked.name} is confused')
+                    delay(2)
+                    mon_attacked.status='confused'
 
             
             if effect == 'flinch':

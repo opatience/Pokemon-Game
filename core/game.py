@@ -12,5 +12,10 @@ class Game:
         self.actions = Actions(self)
         self.battle = Battle(self)
         self.logic = Logic(self)
+    
+    def new_player(self, name):
+        globals()[name] = Player(self)
+        globals()[name].name = name
+
 
 game=Game()

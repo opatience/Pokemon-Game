@@ -43,6 +43,7 @@ def build_pokemon():
         var_name=row['var_name']
         display_name=row['display_name']
         type=row['type'].split('/')
+        type = [type] if isinstance(type, str) else type
         hp=int(row['hp'])
         atk=int(row['attack'])
         spatk=int(row['spatk'])

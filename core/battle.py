@@ -268,6 +268,10 @@ class Battle:
 
         self.weather.damage_pokemon(mon)
 
+        if mon.status != []:
+            for status in mon.status:
+                status.turn_end(mon)
+
         if mon.status != None:
             mon.afflicted_turns += 1
     
@@ -363,19 +367,12 @@ class Battle:
                         crit_mult = 1.5
 
         
-        if isinstance(attacking_mon.type, str) == True:
-            if attacking_mon.type == move.type:
+        for type in attacking_mon.type:
+            if type == move.type:
                 stab_mult = 1.5
-        else:
-            for type in attacking_mon.type:
-                if type == move.type:
-                    stab_mult = 1.5
 
-        if isinstance(defending_pokemon.type, str) == True:
-            type_int_mult = (type_int_mult * type_interactions[move.type][defending_pokemon.type])
-        else:
-            for type in defending_pokemon.type:
-                type_int_mult = (type_int_mult * type_interactions[move.type][type])
+        for type in defending_pokemon.type:
+            type_int_mult = (type_int_mult * type_interactions[move.type][type])
 
         if attacking_mon.status == 'burn':
             burn_mult = .5

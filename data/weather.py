@@ -10,19 +10,16 @@ class Weather:
         self.dmg_immune = dmg_immune or []
 
         if self.start_message:
-            self.display_start_message(start_message)
+            self.display_start_message()
 
     def turn_end(self):
         self.duration -= 1
         if self.duration>0:
-        
             self.turn_end_display()
-
         else:
             self.effect_end_display()
     
     def modify_damage(self, move_type):
-
         if move_type in self.boosted_types:
             return 1.5
         elif move_type in self.weakened_types:
@@ -40,10 +37,9 @@ class Weather:
         pass
 
     def damage_pokemon(self, mon):
-        if self.damaging:
-            if not (mon.type in self.dmg_immune):
-                dmg = (1/16 * mon.hp)
-                display_damage(mon, dmg)
+        if self.damaging and not any(t in self.dmg_immune for t in mon.types):
+            dmg = (1/16 * mon.hp)
+            display_damage(mon, dmg)
         
 
 

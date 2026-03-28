@@ -64,7 +64,7 @@ class Player:
             pokemon.attack_stage=0
             pokemon.spatk_stage=0
             pokemon.speed_stage=0
-            pokemon.status=None
+            pokemon.status=[]
             pokemon.afflicted_turns=0
             pokemon.active_turns=0
             pokemon.trapped_time=0

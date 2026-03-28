@@ -40,7 +40,7 @@ class PlayerPokemon:
         self.speed_iv=random.randint(1,31)
         self.nature=random.choice(natures)
         self.shiny=False
-        self.status=None
+        self.status=[]
         self.afflicted_turns=0
         self.attack_stage=0
         self.spatk_stage=0

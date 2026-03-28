@@ -1,6 +1,7 @@
 from utils import *
 from data.items import * 
 from rich import *
+from data.status import *
 
 class Menu:
     def __init__(self, game):
@@ -305,7 +306,7 @@ class Menu:
         delay(.5)
         print(f'Type: {'/'.join(player.active_pokemon.type)}')
         delay(.5)
-        print(f'Status: {player.active_pokemon.status}')
+        print(f'Status: {player.active_pokemon.status.name if isinstance(player.active_pokemon.status, MajorStatus) else 'None' }')
         delay(.5)
         print(f'HP: {round(((player.active_pokemon.temp_hp/player.active_pokemon.hp)*100))}%')
         delay(2)
@@ -315,7 +316,9 @@ class Menu:
         delay(.5)
         print(f'Type: {'/'.join(cpu.active_pokemon.type)}')
         delay(.5)
-        print(f'Status: {cpu.active_pokemon.status}')
+        print(cpu.active_pokemon.status)
+        print(isinstance(cpu.active_pokemon.status, MajorStatus))
+        print(f'Status: {cpu.active_pokemon.status.name if any((isinstance(s, MajorStatus) for s in cpu.active_pokemon.status)) else 'None' }') #BROKEN ASF
         delay(.5)
         print(f'HP: {round(((cpu.active_pokemon.temp_hp/cpu.active_pokemon.hp)*100))}%\n\n')
         delay(2)
