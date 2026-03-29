@@ -45,6 +45,10 @@ class MajorStatus(Status):
     def switch_logic(self, mon):
         if mon.status.volatile_status == True:
             mon.effects.remove(self)
+    
+    def status_damage(self, mon):
+        if self.damaging:
+            display_damage(mon, (self.pctdmg * mon.hp))
 
     
 class Burn(MajorStatus):
@@ -56,8 +60,15 @@ class Burn(MajorStatus):
         self.pctdmg = 1/16
         self.name = 'Burnt'
 
-    def status_damage(self, mon):
-        display_damage(mon, (self.pctdmg * mon.hp))
+
+class Poison(MajorStatus):
+    def __init__(self):
+        super().__init__()
+        self.status_message = 'Poison harms'
+        self.apply_message = 'is Poisoned'
+        self.damaging = True
+        self.pctdmg = 1/16
+        self.name = 'Poisoned'
 
 class Confusion(MajorStatus):
     def __init__(self):

@@ -55,5 +55,4 @@ add_spawns(
     {pidgey:.35,
      ekans:.3,
      weedle:.3,
-     diglett:.05}
-           )
+     diglett:.05})

@@ -150,7 +150,7 @@ class Player:
 
             
     def __init__(self, game):
-        self.name=''
+        self.name = ''
         self.starter=''
         self.pokemon=[]
         self.team=[]
@@ -173,7 +173,7 @@ class Player:
         self.opponent=''
         self.game=game
         self.proceed=False
-
+        self.encounter_display = None
 #Convenient Player Shortcuts
 
     #Active Pokemon Health

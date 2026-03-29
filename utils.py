@@ -4,6 +4,7 @@ test=True
 from data.items import ModifierItems
 from colorama import *
 from data.pokemon import *
+from data.status import MajorStatus
 
 
 def new_screen():
@@ -69,5 +70,11 @@ def display_damage(mon, dmg):
     print(f'{mon.name} has {round(((mon.temp_hp/mon.hp)*100))}% hp remaining')
     delay(2)
 
-
+def show_status(status_list):
+    for s in status_list:
+        if isinstance(s, MajorStatus):
+            print(f"Status: {s.name}")
+            s_there = True
+    if not(s_there):
+        print('mone')
 default=Fore.WHITE

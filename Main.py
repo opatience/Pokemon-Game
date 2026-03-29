@@ -14,6 +14,7 @@ from rich import *
 from colorama import *
 from data.weather import *
 from data.status import *
+from data.opponents import *
 
 #delay_on()
 #game.player.money=5000
@@ -35,9 +36,10 @@ def run_pokemon():
     delay(2)
     rival_interaction(rival)
     delay(3)
+    
     game.menu.new_area(route_101)
     game.menu.display_options()
-    
+    jim.encounter
     game.new_area(route_102)
 
 
@@ -116,6 +118,6 @@ def testing_environment():
     test_cpu.team[0].base_hp=100000
     game.battle.pokemon_fights(game.player, test_cpu)
 
-print(isinstance(Burn(), MajorStatus))
+
 testing_environment()
 #run_pokemon()
