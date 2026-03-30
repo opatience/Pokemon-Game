@@ -112,7 +112,7 @@ class Logic:
             if effect == 'leech_seed':
                 print(f'The seeds attatch to the enemy {mon_attacked.name}\n')
                 delay(2)
-                mon_attacked.leech_seed_draining = True
+                mon_attacked.status.append(LeechSeed())
 
             if effect == 'recoil':
                 dmg=(self.game.battle.calculate_damage(move, mon_attacked, mon_using, False)*move.effect_magnitude[ei])
@@ -256,8 +256,10 @@ class Logic:
         mon.active_turns=0
         mon.fire_spin=False
         mon.leech_seed_draining=False
-        if mon.status == 'confused':
-            mon.status=None
+        if mon.status != []:
+            for s in mon.status:
+                s.switch_logic(mon)
+
 
     def trapped_check(self, player):
         if player.active_pokemon.trapped==True:

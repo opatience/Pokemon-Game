@@ -105,8 +105,8 @@ def determine_rival_starter():
 def testing_environment():
     #delay_on()
     game.player.new_pokemon(bulbasaur, 100)
-    game.player.team[0].base_hp=100000
-    game.player.team[0].moveset[0]=flame_wheel
+    game.player.team[0].base_hp=30
+    game.player.team[0].moveset[0]=leech_seed
     game.player.team[0].moveset[1] = water_gun
     game.player.team[0].moveset[2]=poison_powder
     game.player.team[0].moveset[3]=scary_face
@@ -115,7 +115,7 @@ def testing_environment():
     test_cpu.wild=True
     test_cpu.new_pokemon(squirtle, 100)
     test_cpu.team[0].moveset[0]=ice_shard
-    test_cpu.team[0].base_hp=100000
+    test_cpu.team[0].base_hp=30
     game.battle.pokemon_fights(game.player, test_cpu)
 
 

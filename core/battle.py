@@ -5,6 +5,7 @@ import math
 import random
 from data.interactions import *
 from data.weather import *
+from data.status import *
 
 class Battle:
     def __init__(self, game):
@@ -206,7 +207,7 @@ class Battle:
         self.resolve_status(cpu)
     
     def increment_weather(self):
-        self.weather.turn_end()
+        self.weather.weather_turn_end()
         if self.weather.duration == 0:
             self.weather = ClearWeather()
 
@@ -270,6 +271,7 @@ class Battle:
 
         if mon.status != []:
             for status in mon.status:
+                status.context = EffectContext(source = player.opponent.active_pokemon, target = mon, battle = self)
                 status.turn_end(mon)
 
         if mon.status != None:
@@ -296,34 +298,7 @@ class Battle:
         
 
         #MAKE THIS INTO VARS
-        if mon.leech_seed_draining == True:
-            leech_seed_drain = ((1/8) * mon.hp)
-            mon.temp_hp -= leech_seed_drain
-            print(f"Plants drain {mon.name}'s health")
-            delay(2)
-            print(f'{mon.name} has {round(
-                                        ((mon.temp_hp/mon.hp)
-                                         *100))}% hp remaining\n')
-            delay(2)
 
-            if round(((player.opponent.active_pokemon.temp_hp+leech_seed_drain)/player.opponent.active_pokemon.hp)*100)<100:
-                print(f"{player.opponent.aname} is healed by leech seed")
-                delay(2)
-                print(f"{player.opponent.aname} gained {round( 
-                                                        (((player.opponent.active_pokemon.temp_hp+leech_seed_drain)/player.opponent.active_pokemon.hp)
-                                                         -(player.opponent.active_pokemon.temp_hp/player.opponent.active_pokemon.hp))
-                                                        *100)}% hp")
-                delay(2)
-                player.opponent.active_pokemon.temp_hp+=leech_seed_drain
-
-            else:
-               print(f"{player.opponent.aname} is healed by leech seed")
-               delay(2)
-               print(f'{player.opponent.aname} is at 100% hp') 
-               delay(2)
-               player.opponent.active_pokemon.temp_hp = player.opponent.active_pokemon.hp
-        else:
-            mon.afflicted_turns = 0
 
 
     def optimize_cpu_attack(self, cpu):

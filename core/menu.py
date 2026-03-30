@@ -333,3 +333,12 @@ class Menu:
     @property
     def battle(self):
         return self.game.battle
+
+def show_status(status_list):
+    s_there = False
+    for s in status_list:
+        if isinstance(s, MajorStatus):
+            print(f"Status: {s.name}")
+            s_there = True
+    if not(s_there):
+        print('Status: None')

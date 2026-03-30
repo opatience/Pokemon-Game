@@ -12,7 +12,7 @@ class Weather:
         if self.start_message:
             self.display_start_message()
 
-    def turn_end(self):
+    def weather_turn_end(self):
         self.duration -= 1
         if self.duration>0:
             self.turn_end_display()
